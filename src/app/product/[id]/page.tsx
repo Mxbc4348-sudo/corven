@@ -3,14 +3,12 @@ import { supabase } from "@/app/lib/supabase";
 export default async function ProductPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params;
-
   const { data, error } = await supabase
     .from("products")
     .select("*")
-    .eq("id", id)
+    .eq("id", params.id)
     .single();
 
   if (!data || error) {
@@ -22,19 +20,11 @@ export default async function ProductPage({
   }
 
   return (
-    <div
-      style={{
-        padding: 40,
-        color: "white",
-        background: "#000",
-        minHeight: "100vh",
-      }}
-    >
-      <img src={data.image} style={{ width: 400, borderRadius: 12 }} />
-
+    <div style={{ padding: 40, color: "white", background: "#000" }}>
       <h1>{data.name}</h1>
+      <img src={data.image} width="300" />
       <p>{data.description}</p>
-      <h2>${data.price}</h2>
+      <p>${data.price}</p>
     </div>
   );
 }
