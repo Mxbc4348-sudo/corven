@@ -3,9 +3,9 @@ import { supabase } from "@/app/lib/supabase";
 export default async function ProductPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params;
+  const id = params.id;
 
   const { data, error } = await supabase
     .from("products")
